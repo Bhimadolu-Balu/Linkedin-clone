@@ -5,24 +5,24 @@ import {
 	createWelcomeEmailTemplate,
 } from "./emailTemplates.js";
 
-export const sendWelcomeEmail = async (email, name, profileUrl) => {
-	const recipient = [{ email }];
+export const sendWelcomeEmail = async (email, name, profileUrl) => { 
+    const recipient = [{ email: email }]; // Ensure email is properly assigned
 
-	try {
-		const response = await mailtrapClient.send({
-			from: sender,
-			to: recipient,
-			subject: "Welcome to UnLinked",
-			html: createWelcomeEmailTemplate(name, profileUrl),
-			category: "welcome",
-		});
+    try {
+        const response = await mailtrapClient.send({
+            from: sender,
+            to: recipient,
+            subject: "Welcome to UnLinked",
+            html: createWelcomeEmailTemplate(name, profileUrl),
+            category: ["welcome"], // Ensure category is an array if required by Mailtrap
+        });
 
-		console.log("Welcome Email sent succesffully", response);
-	} catch (error) {
-		throw error;
-	}
+        console.log("Welcome Email sent successfully", response);
+    } catch (error) {
+        console.error("Error sending Welcome Email:", error); // Log the error
+        throw error;
+    }
 };
-
 export const sendCommentNotificationEmail = async (
 	recipientEmail,
 	recipientName,
